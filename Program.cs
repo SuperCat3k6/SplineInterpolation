@@ -39,6 +39,8 @@ class SplineInterpolation
         }
 
         Console.WriteLine($"Результаты сохранены в {tablePath}");
+        Console.WriteLine("Файлы сохранены, работа программы завершена, нажмите любую клавишу для выхода");
+        Console.ReadKey();
     }
 
     static void ProcessSpline(double[] x, double[] y, int k, string splineType, StreamWriter writer)
