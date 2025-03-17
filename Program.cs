@@ -141,8 +141,10 @@ class SplineInterpolation
     static void PlotSpline(double[] xs, double[] ysFunc, double[] ysSpline, int n, string splineType)
     {
         var plt = new ScottPlot.Plot();
-        plt.Add.Scatter(xs, ysFunc, color: ScottPlot.Colors.Blue);
-        plt.Add.Scatter(xs, ysSpline, color: ScottPlot.Colors.Red);
+        var scatterFunc = plt.Add.Scatter(xs, ysFunc, color: ScottPlot.Colors.Blue);
+        var scatterSpline = plt.Add.Scatter(xs, ysSpline, color: ScottPlot.Colors.Red);
+        scatterFunc.LegendText = "f(x)";
+        scatterSpline.LegendText = $"Сплайн {splineType} (n={n})";
         plt.ShowLegend();
         plt.Title($"Интерполяция: {splineType} (n={n})");
         string fileName = $"spline_{splineType}_n{n}.png".Replace(" ", "_");
