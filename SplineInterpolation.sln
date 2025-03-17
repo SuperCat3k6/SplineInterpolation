@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplineInterpolation", "SplineInterpolation\SplineInterpolation.csproj", "{B570B139-662B-4968-8C0D-5BA03CF070BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B570B139-662B-4968-8C0D-5BA03CF070BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B570B139-662B-4968-8C0D-5BA03CF070BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B570B139-662B-4968-8C0D-5BA03CF070BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B570B139-662B-4968-8C0D-5BA03CF070BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD1288C8-D387-4276-BFD1-C7B226AAA6CA}
+	EndGlobalSection
+EndGlobal
