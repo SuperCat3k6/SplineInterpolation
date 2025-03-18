@@ -76,44 +76,44 @@ class SplineInterpolation
     // Линейный сплайн
     static double LinearSpline(double[] x, double[] y, double xVal)
     {
-        int i = FindSegment(x, xVal);
-        double t = (xVal - x[i]) / (x[i + 1] - x[i]);
-        return y[i] * (1 - t) + y[i + 1] * t;
+        int i = FindSegment(x, xVal); // Находим интервал
+        double t = (xVal - x[i]) / (x[i + 1] - x[i]); //Вычисляем параметр t, который показывыет где находится x искомая на промежутке
+        return y[i] * (1 - t) + y[i + 1] * t; //Линейно интерполируем
     }
 
     // Квадратичный сплайн
     static double QuadraticSpline(double[] x, double[] y, double xVal)
     {
-        int i = FindSegment(x, xVal);
-        if (i >= x.Length - 2) i = x.Length - 3;
+        int i = FindSegment(x, xVal); // Находим интервал
+        if (i >= x.Length - 2) i = x.Length - 3; // Ограничиваем индекс, чтобы не выйти за пределы массива
 
-        double h = x[i + 1] - x[i];
-        double a = y[i];
-        double b = (y[i + 1] - y[i]) / h;
-        double c = (y[i + 2] - 2 * y[i + 1] + y[i]) / (h * h);
-        return a + b * (xVal - x[i]) + c * (xVal - x[i]) * (xVal - x[i + 1]);
+        double h = x[i + 1] - x[i]; 
+        double a = y[i]; // Значение в начале интервала
+        double b = (y[i + 1] - y[i]) / h; // Приближенный наклон
+        double c = (y[i + 2] - 2 * y[i + 1] + y[i]) / (h * h); // учитывает кривизну (вторая производная)
+        return a + b * (xVal - x[i]) + c * (xVal - x[i]) * (xVal - x[i + 1]); // Подставляем в уравнение
     }
 
     // Кубический сплайн (натуральный)
     static double CubicSpline(double[] x, double[] y, double xVal)
     {
         int n = x.Length;
-        double[] h = new double[n - 1], alpha = new double[n - 1];
-        double[] l = new double[n], mu = new double[n], z = new double[n];
-        double[] c = new double[n], b = new double[n - 1], d = new double[n - 1];
+        double[] h = new double[n - 1], alpha = new double[n - 1]; //Длины интервалов h и вспомогательный коэффициент alpha
+        double[] l = new double[n], mu = new double[n], z = new double[n]; // Массивы для прогонки
+        double[] c = new double[n], b = new double[n - 1], d = new double[n - 1]; // Коэффициенты кубического полинома.
         for (int j = 0; j < n - 1; j++)
-            h[j] = x[j + 1] - x[j];
+            h[j] = x[j + 1] - x[j]; //Вычисление h
         for (int j = 1; j < n - 1; j++)
-            alpha[j] = (3 / h[j]) * (y[j + 1] - y[j]) - (3 / h[j - 1]) * (y[j] - y[j - 1]);
-        l[0] = 1; mu[0] = 0; z[0] = 0;
-        for (int j = 1; j < n - 1; j++)
+            alpha[j] = (3 / h[j]) * (y[j + 1] - y[j]) - (3 / h[j - 1]) * (y[j] - y[j - 1]); // Вычисление alpha
+        l[0] = 1; mu[0] = 0; z[0] = 0; 
+        for (int j = 1; j < n - 1; j++) // Решение системы трехдиагональной матрицы методом прогонки
         {
-            l[j] = 2 * (x[j + 1] - x[j - 1]) - h[j - 1] * mu[j - 1];
+            l[j] = 2 * (x[j + 1] - x[j - 1]) - h[j - 1] * mu[j - 1]; 
             mu[j] = h[j] / l[j];
             z[j] = (alpha[j] - h[j - 1] * z[j - 1]) / l[j];
         }
 
-        l[n - 1] = 1; z[n - 1] = 0; c[n - 1] = 0;
+        l[n - 1] = 1; z[n - 1] = 0; c[n - 1] = 0; // Обратная прогонка для вычисления коэффициентов
         for (int j = n - 2; j >= 0; j--)
         {
             c[j] = z[j] - mu[j] * c[j + 1];
@@ -121,7 +121,7 @@ class SplineInterpolation
             d[j] = (c[j + 1] - c[j]) / (3 * h[j]);
         }
 
-        int i = FindSegment(x, xVal);
+        int i = FindSegment(x, xVal); // Вычисление значения y искомого
         double dx = xVal - x[i];
         return y[i] + b[i] * dx + c[i] * dx * dx + d[i] * dx * dx * dx;
     }
